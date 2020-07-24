@@ -1,0 +1,29 @@
+[package]
+name = "night-library"
+version = "0.1.0"
+authors = ["SaltyAom <aomkirby@mystiar.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+actix-web = "2.0"
+actix-rt = "1.1.1"
+actix-identity = "0.2.1"
+
+askama = "0.10.2"
+
+data-encoding = "2.2.1"
+ring = "0.16.15"
+
+serde = "1.0"
+serde_json = "1.0"
+uuid = { version = "0.8", features = ["serde", "v4"] }
+
+diesel = { version = "1.4.5", features = ["postgres", "r2d2", "numeric"] }
+r2d2 = "0.8.9"
+bigdecimal = { version = "0.1.2", features = ["serde"] }
+
+dotenv = "0.15"
+futures = "0.3.5"
+jsonwebtoken = "7.2.0"
