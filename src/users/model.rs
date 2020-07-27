@@ -5,8 +5,10 @@ use diesel::prelude::*;
 use crate::schema::users;
 use crate::schema::users::dsl::*;
 
+use juniper::GraphQLObject;
+
 // In-case for change in the future
-#[derive(Debug, Clone, Serialize, Queryable, Insertable)]
+#[derive(Clone, Deserialize, Serialize, Queryable, Insertable, GraphQLObject)]
 pub struct User {
     pub username: String,
     pub password: String,

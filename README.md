@@ -10,5 +10,6 @@ Small side-project library management system written in Rust to practice Rust.
 
 ### Tech Stack:
 * Actix Web
-* Diesel & r2d2
 * PostgreSQL
+* Diesel & r2d2
+* GraphQL (using Juniper)

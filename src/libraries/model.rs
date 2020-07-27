@@ -1,28 +1,34 @@
-use std::str::FromStr;
-
-use serde::{Deserialize, Serialize};
-
 use diesel::prelude::*;
 
 use crate::schema::libraries;
 use crate::schema::libraries::dsl::*;
 
-use bigdecimal::BigDecimal;
+use juniper::GraphQLObject;
+use serde::{Deserialize, Serialize};
+
+use crate::bigdecimal::MyBigDecimal;
 use uuid::Uuid;
 
-#[derive(Debug, Clone, Deserialize, Serialize, Queryable, Insertable)]
+#[derive(Clone, Deserialize, Serialize, Queryable, Insertable, GraphQLObject)]
 pub struct Librarie {
     pub id: String,
     pub title: String,
     pub author: String,
-    pub price: BigDecimal,
+    pub price: MyBigDecimal,
 }
 
 #[derive(Deserialize)]
 pub struct LibrarieForm {
     pub title: String,
     pub author: String,
-    pub price: BigDecimal,
+    pub price: MyBigDecimal,
+}
+
+#[derive(Serialize, Deserialize, GraphQLObject)]
+pub struct ListBookResultQuery {
+    pub success: bool,
+    pub info: String,
+    pub data: Vec<Librarie>,
 }
 
 impl Default for Librarie {
@@ -31,7 +37,7 @@ impl Default for Librarie {
             id: Uuid::new_v4().to_string(),
             title: "".to_owned(),
             author: "".to_owned(),
-            price: BigDecimal::from_str(&"0").unwrap(),
+            price: MyBigDecimal::from_str(&"0"),
         }
     }
 }

@@ -11,6 +11,7 @@ actix-web = "2.0"
 actix-rt = "1.1.1"
 actix-identity = "0.2.1"
 
+juniper = "0.14.2"
 askama = "0.10.2"
 
 data-encoding = "2.2.1"

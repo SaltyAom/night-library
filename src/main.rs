@@ -3,29 +3,30 @@ extern crate diesel;
 
 use std::io;
 use std::env;
+use std::sync::Arc;
 use dotenv::dotenv;
 
 use actix_web::{ HttpServer, App };
 use actix_identity::{ IdentityService, CookieIdentityPolicy };
 
-use diesel::prelude::*;
-use diesel::r2d2::{self, ConnectionManager};
+use crate::database::get_connection_pool;
+use crate::graphql::create_schema;
 
 mod routes;
 mod libraries;
 mod users;
 mod schema;
 mod lends;
+mod graphql;
+mod database;
+mod bigdecimal;
 
 #[actix_rt::main]
 async fn main() -> io::Result<()> {
     dotenv().ok();
-    
-    let connection_url = std::env::var("DATABASE_URL").expect("Database Url");
-    let connection_manager = ConnectionManager::<PgConnection>::new(connection_url);
-    let pool = r2d2::Pool::builder()
-        .build(connection_manager)
-        .expect("Connection Pool");
+
+    let schema = Arc::new(create_schema());
+    let pool = get_connection_pool();
 
     HttpServer::new(move || {
         App::new()
@@ -39,10 +40,11 @@ async fn main() -> io::Result<()> {
                 )
             )
             .data(pool.clone())
+            .data(schema.clone())
             .service(routes::common::index)
-            .configure(libraries::routes::book)
+            .service(routes::common::graphql)
+            .service(routes::common::graphiql)
             .configure(users::routes::user)
-            .configure(lends::routes::lend_service)
     })
     .bind("0.0.0.0:80")?
     .run()

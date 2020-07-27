@@ -5,7 +5,9 @@ use diesel::prelude::*;
 use crate::schema::lends;
 use crate::schema::lends::dsl::*;
 
-#[derive(Debug, Clone, Deserialize, Serialize, Queryable, Insertable)]
+use juniper::GraphQLObject;
+
+#[derive(Clone, Deserialize, Serialize, Queryable, Insertable, GraphQLObject)]
 pub struct Lend {
     pub username: String,
     pub books: Vec<String>,
@@ -13,7 +15,14 @@ pub struct Lend {
 
 #[derive(Deserialize)]
 pub struct LendForm {
-    pub book: Vec<String>,
+    pub books: Vec<String>,
+}
+
+#[derive(Serialize, Deserialize, GraphQLObject)]
+pub struct LendResultQuery {
+    pub success: bool,
+    pub info: String,
+    pub data: Vec<String>,
 }
 
 impl Lend {

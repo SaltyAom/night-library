@@ -889,6 +889,7 @@ checksum = "5b88cd59ee5f71fea89a62248fc8f387d44400cefe05ef548466d61ced9029a7"
 dependencies = [
  "autocfg",
  "hashbrown",
+ "serde",
 ]
 
 [[package]]
@@ -945,6 +946,33 @@ dependencies = [
  "serde",
  "serde_json",
  "simple_asn1",
+]
+
+[[package]]
+name = "juniper"
+version = "0.14.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f662ba51e2fbc3d6dd1ca66be70b44963606a34473156abddcb0351fc6caa668"
+dependencies = [
+ "chrono",
+ "fnv",
+ "indexmap",
+ "juniper_codegen",
+ "serde",
+ "serde_derive",
+ "url",
+ "uuid 0.7.4",
+]
+
+[[package]]
+name = "juniper_codegen"
+version = "0.14.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d40af234d8e971a9d7dda93ffbcc8a44a93f17e69e3067f72ce7a6894c41d51b"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
 ]
 
 [[package]]
@@ -1108,11 +1136,12 @@ dependencies = [
  "dotenv",
  "futures",
  "jsonwebtoken",
+ "juniper",
  "r2d2",
  "ring",
  "serde",
  "serde_json",
- "uuid",
+ "uuid 0.8.1",
 ]
 
 [[package]]
@@ -1750,6 +1779,12 @@ dependencies = [
  "matches",
  "percent-encoding",
 ]
+
+[[package]]
+name = "uuid"
+version = "0.7.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "90dbc611eb48397705a6b0f6e917da23ae517e4d127123d2cf7674206627d32a"
 
 [[package]]
 name = "uuid"

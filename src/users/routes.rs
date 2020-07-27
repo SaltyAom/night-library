@@ -4,10 +4,10 @@ use actix_web::{get, post, web, Error, HttpResponse};
 use diesel::prelude::*;
 use diesel::r2d2::{self, ConnectionManager};
 
-use crate::users::model::{User, UserForm};
 use crate::users::hash::hash;
+use crate::users::jwt::{decode, encode};
+use crate::users::model::{User, UserForm};
 use crate::users::time::get_expire_time;
-use crate::users::jwt::{ encode, decode };
 
 type ConnectionPool = r2d2::Pool<ConnectionManager<PgConnection>>;
 
@@ -82,7 +82,7 @@ pub async fn logout(user: Identity) -> String {
 #[post("/api/refresh")]
 pub async fn refresh(user: Identity) -> HttpResponse {
     if user.identity().is_none() {
-        return HttpResponse::BadRequest().finish()
+        return HttpResponse::BadRequest().finish();
     };
 
     let auth = decode(&user.identity().unwrap());
@@ -97,7 +97,6 @@ pub async fn refresh(user: Identity) -> HttpResponse {
 
             HttpResponse::BadRequest().finish()
         }
-
     } else {
         user.forget();
 
@@ -106,5 +105,9 @@ pub async fn refresh(user: Identity) -> HttpResponse {
 }
 
 pub fn user(config: &mut web::ServiceConfig) {
-    config.service(login).service(register).service(logout).service(refresh);
+    config
+        .service(login)
+        .service(register)
+        .service(logout)
+        .service(refresh);
 }
