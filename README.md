@@ -7,9 +7,12 @@ Small side-project library management system written in Rust to practice Rust.
 * Basic add, remove, list-all book.
 * JWT and refresh token.
 * User-book releation (borrow-return)
+* Frontend
 
 ### Tech Stack:
 * Actix Web
 * PostgreSQL
 * Diesel & r2d2
 * GraphQL (using Juniper)
+* Preact
+* TypeScript
