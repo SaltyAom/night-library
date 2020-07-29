@@ -1,7 +1,7 @@
 # Night Library
 Small side-project library management system written in Rust to practice Rust.
 
-#### Haven't written Frontend yet.
+![Preview](https://raw.githubusercontent.com/SaltyAom/night-library/master/client/assets/preview.png)
 
 ## What include
 * Basic add, remove, list-all book.
