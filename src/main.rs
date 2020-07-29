@@ -1,12 +1,15 @@
 #[macro_use]
 extern crate diesel;
 
+#[macro_use]
+extern crate lazy_static;
+
 use std::io;
 use std::env;
 use std::sync::Arc;
 use dotenv::dotenv;
 
-use actix_web::{ HttpServer, App, web };
+use actix_web::{ HttpServer, App, web, middleware };
 use actix_identity::{ IdentityService, CookieIdentityPolicy };
 use actix_files as fs;
 
@@ -46,6 +49,7 @@ async fn main() -> io::Result<()> {
             //         .max_age(86400)
             //         .finish()
             // )
+            .wrap(middleware::Compress::default())
             .wrap(
                 IdentityService::new(
                     CookieIdentityPolicy::new(

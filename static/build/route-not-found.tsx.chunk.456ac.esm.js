@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[5],{NL8Y:function(n,o,s){"use strict";s.r(o);var t=s("hosL");s("QYsp"),o.default=()=>Object(t.h)("main",{id:"not-found"},Object(t.h)("h1",{class:"title"},"404"),Object(t.h)("p",{class:"detail"},"The page you're looking found is not found"))},QYsp:function(){}}]);

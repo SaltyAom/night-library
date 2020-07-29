@@ -1128,6 +1128,7 @@ dependencies = [
  "futures",
  "jsonwebtoken",
  "juniper",
+ "lazy_static",
  "r2d2",
  "ring",
  "serde",

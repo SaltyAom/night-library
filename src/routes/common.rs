@@ -48,12 +48,22 @@ pub async fn graphql(
         .body(result))
 }
 
+
+lazy_static! {
+    static ref LANDING_PAGE: &'static str = include_str!("../../static/index.html");
+    static ref ME_PAGE: &'static str = include_str!("../../static/me/index.html");
+    static ref MY_BOOK_PAGE: &'static str = include_str!("../../static/my-book/index.html");
+    static ref SIGNIN_PAGE: &'static str = include_str!("../../static/signin/index.html");
+    static ref SIGNUP_PAGE: &'static str = include_str!("../../static/signup/index.html");
+    static ref NOT_FOUND_PAGE: &'static str = include_str!("../../static/404/index.html");
+}
+
 #[get("/")]
 pub async fn client_landing() -> HttpResponse {
     HttpResponse::Ok()
         .content_type("text/html")
         .body(
-            include_str!("../../static/index.html").to_owned()
+            LANDING_PAGE.to_owned()
         )
 }
 
@@ -62,7 +72,7 @@ pub async fn client_me() -> HttpResponse {
     HttpResponse::Ok()
         .content_type("text/html")
         .body(
-            include_str!("../../static/me/index.html").to_owned()
+            ME_PAGE.to_owned()
         )
 }
 
@@ -71,7 +81,7 @@ pub async fn client_my_book() -> HttpResponse {
     HttpResponse::Ok()
         .content_type("text/html")
         .body(
-            include_str!("../../static/my-book/index.html").to_owned()
+            MY_BOOK_PAGE.to_owned()
         )
 }
 
@@ -80,7 +90,7 @@ pub async fn client_signin() -> HttpResponse {
     HttpResponse::Ok()
         .content_type("text/html")
         .body(
-            include_str!("../../static/signin/index.html").to_owned()
+            SIGNIN_PAGE.to_owned()
         )
 }
 
@@ -89,7 +99,7 @@ pub async fn client_signup() -> HttpResponse {
     HttpResponse::Ok()
         .content_type("text/html")
         .body(
-            include_str!("../../static/signup/index.html").to_owned()
+            SIGNUP_PAGE.to_owned()
         )
 }
 
@@ -97,7 +107,7 @@ pub async fn client_404() -> HttpResponse {
     HttpResponse::Ok()
         .content_type("text/html")
         .body(
-            include_str!("../../static/404/index.html").to_owned()
+            NOT_FOUND_PAGE.to_owned()
         )
 }
 

@@ -10,6 +10,7 @@
     "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
     "test": "jest ./tests",
     "format": "prettier --write ./src/**/*.tsx && prettier --write ./src/**/*.ts",
+    "prebuild": "rm -rf ../static",
     "postbuild": "mv build ../static"
   },
   "husky": {
