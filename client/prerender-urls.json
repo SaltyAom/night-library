@@ -1,0 +1,26 @@
+[
+    {
+        "url": "/",
+        "title": "Night Library"
+    },
+    {
+        "url": "/me",
+        "title": "Sign in"
+    },
+    {
+        "url": "/signin",
+        "title": "Sign In"
+    },
+    {
+        "url": "/signup",
+        "title": "Sign Up"
+    },
+    {
+        "url": "/my-book",
+        "title": "My Book"
+    },
+    {
+        "url": "/404",
+        "title": "Not Found"
+    }
+]

@@ -3,7 +3,7 @@ use juniper::{Context, FieldResult, GraphQLObject, RootNode};
 use crate::bigdecimal::MyBigDecimal;
 use crate::database::ConnectionPool;
 
-use crate::lends::model::{LendForm, LendResultQuery};
+use crate::lends::model::{LendDetailResultQuery, LendForm, LendResultQuery};
 use crate::lends::services::{borrow_books_service, list_borrowed_service, return_books_service};
 
 use crate::libraries::model::{Librarie, ListBookResultQuery};
@@ -45,7 +45,7 @@ impl QueryRoot {
         Ok(list_book_service(context.connection_pool.to_owned()))
     }
 
-    fn list_borrowed(context: &Metadata) -> FieldResult<LendResultQuery> {
+    fn list_borrowed(context: &Metadata) -> FieldResult<LendDetailResultQuery> {
         Ok(list_borrowed_service(
             context.username.to_owned(),
             context.connection_pool.to_owned(),

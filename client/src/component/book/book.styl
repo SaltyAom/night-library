@@ -1,0 +1,81 @@
+.book
+    display flex
+    flex-direction row
+    justify-content flex-start
+    align-items center
+    width 100%
+    padding 20px 0
+    border-bottom 1px solid var(--border)
+
+    & > .content
+        display flex
+        flex-direction column
+        flex 1
+        width 100%
+
+        & > .title
+            font-size 24px
+            font-weight 500
+            color var(--title)
+            margin 0
+
+        & > .author
+            font-size 16px
+            font-weight 300
+            color var(--content)
+            margin 12px 0
+
+        & > .price
+            font-size 16px
+            font-weight 300
+            color var(--content)
+            margin 0
+
+            &::before
+                content "฿"
+
+    & > .lend
+        appearance none
+        -webkit-appearance none
+        font-size 14px
+        font-weight 500
+        padding 8px 24px
+        border-radius 6px
+        background-color var(--link)
+        color var(--text-on-link)
+        border 0
+        cursor pointer
+
+        &.-disabled
+            cursor not-allowed
+
+    &.-preload
+        & > .content
+            & > .title
+                display block
+                width 288px
+                height 28px
+                border-radius 6px
+                background-color var(--preload)
+
+            & > .author
+                display block
+                width 72px
+                height 18px
+                border-radius 6px
+                background-color var(--preload)
+
+            & > .price
+                display block
+                width 36px
+                height 18px
+                border-radius 6px
+                background-color var(--preload)
+
+                &::before
+                    content ""
+
+        & > .lend
+            width 95px
+            height 33px
+            cursor default

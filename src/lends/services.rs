@@ -1,4 +1,4 @@
-use crate::lends::model::{Lend, LendForm, LendResultQuery};
+use crate::lends::model::{Lend, LendDetailResultQuery, LendForm, LendResultQuery};
 
 use crate::database::ConnectionPool;
 
@@ -51,9 +51,9 @@ pub fn borrow_books_service(
 pub fn list_borrowed_service(
     username: Option<String>,
     connection_pool: ConnectionPool,
-) -> LendResultQuery {
+) -> LendDetailResultQuery {
     if username.is_none() {
-        return LendResultQuery {
+        return LendDetailResultQuery {
             success: false,
             info: "Unauthorized".to_owned(),
             data: vec![],
@@ -67,25 +67,25 @@ pub fn list_borrowed_service(
         books: vec![],
     };
 
-    let response = books.list(&connection);
+    let response = books.list_detail(&connection);
 
     match response {
-        Ok(borrowed) => {
-            if let Some(lend) = borrowed {
-                LendResultQuery {
+        Ok(lend) => {
+            if let Some(borrowed) = lend {
+                LendDetailResultQuery {
                     success: true,
                     info: "".to_owned(),
-                    data: lend.books,
+                    data: borrowed,
                 }
             } else {
-                LendResultQuery {
+                LendDetailResultQuery {
                     success: true,
                     info: "".to_owned(),
                     data: vec![],
                 }
             }
         }
-        Err(_) => LendResultQuery {
+        Err(_) => LendDetailResultQuery {
             success: false,
             info: "Something went wrong".to_owned(),
             data: vec![],

@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[5],{NL8Y:function(n,o,t){"use strict";t.r(o);var e=t("hosL");t("QYsp");o.default=function(){return Object(e.h)("main",{id:"not-found"},Object(e.h)("h1",{class:"title"},"404"),Object(e.h)("p",{class:"detail"},"The page you're looking found is not found"))}},QYsp:function(){}}]);
+//# sourceMappingURL=route-not-found.tsx.chunk.bf7a3.js.map

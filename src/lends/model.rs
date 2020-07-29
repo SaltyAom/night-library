@@ -5,6 +5,8 @@ use diesel::prelude::*;
 use crate::schema::lends;
 use crate::schema::lends::dsl::*;
 
+use crate::libraries::model::{in_library, Librarie};
+
 use juniper::GraphQLObject;
 
 #[derive(Clone, Deserialize, Serialize, Queryable, Insertable, GraphQLObject)]
@@ -25,18 +27,24 @@ pub struct LendResultQuery {
     pub data: Vec<String>,
 }
 
+#[derive(Serialize, Deserialize, GraphQLObject)]
+pub struct LendDetailResultQuery {
+    pub success: bool,
+    pub info: String,
+    pub data: Vec<Librarie>,
+}
+
 impl Lend {
     pub fn append(&self, connection: &PgConnection) -> Result<Option<Lend>, diesel::result::Error> {
         // SQL append array is not support
         let book_data = self.list(connection).unwrap();
 
-        let new_list = self.books.to_owned();
+        let mut new_list = self.books.to_owned();
 
         if book_data.is_some() {
-            let mut book_list = book_data.unwrap().books;
+            let book_list = book_data.unwrap().books;
 
-            // Remove return duplicate books.
-            book_list.retain(|book| new_list.contains(&book));
+            new_list.extend(book_list.iter().cloned());
         };
 
         let appended = Lend {
@@ -86,5 +94,22 @@ impl Lend {
             .optional()?;
 
         Ok(book_list)
+    }
+
+    pub fn list_detail(
+        &self,
+        connection: &PgConnection,
+    ) -> Result<Option<Vec<Librarie>>, diesel::result::Error> {
+        let borrowed_list = lends
+            .filter(username.eq(self.username.to_owned()))
+            .first::<Lend>(connection);
+
+        let borrowed_books: Vec<Librarie> = in_library(borrowed_list.unwrap().books, connection)?;
+
+        if borrowed_books.len() > 0 {
+            Ok(Some(borrowed_books))
+        } else {
+            Ok(None)
+        }
     }
 }

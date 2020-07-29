@@ -1,0 +1,25 @@
+#action-list
+    display flex
+    flex-direction row
+    justify-content flex-start
+    align-items center
+    height inherit
+    border-bottom 1px solid var(--border)
+
+    & > .action
+        display flex
+        flex-direction column
+        justify-content center
+        align-items center
+        height inherit
+        font-size 18px
+        font-weight 300
+        color var(--content)
+        text-decoration none
+        padding 8px 16px 0 16px
+        margin 0 0 0 8px
+        transition color .15s ease-out
+
+        &:hover,
+        &:focus
+            color var(--link)

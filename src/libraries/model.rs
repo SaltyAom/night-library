@@ -64,3 +64,12 @@ impl Librarie {
         books
     }
 }
+
+pub fn in_library(
+    books: Vec<String>,
+    connection: &PgConnection,
+) -> Result<Vec<Librarie>, diesel::result::Error> {
+    let in_books = libraries.filter(id.eq_any(books)).load(connection);
+
+    in_books
+}

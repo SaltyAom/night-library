@@ -1,0 +1,39 @@
+#user
+    display flex
+    flex-direction column
+    justify-content center
+    align-items center
+    width 100%
+    min-height calc(100vh - 74px)
+    padding 0 8px 74px 8px
+
+    & > .title
+        font-size 24px
+        font-weight 500
+        color var(--title)
+
+    & > .action-list
+        display flex
+        flex-direction row
+        justify-content center
+        align-items center
+        margin 16px 0 0 0
+
+        & > .action
+            appearance none
+            -webkit-appearance none
+            display flex
+            flex-direction row
+            justify-content center
+            align-items center
+            color var(--content)
+            font-size 18px
+            font-weight 500
+            text-decoration none
+            margin 0 8px
+            padding 12px 48px
+            background-color var(--fade)
+            border 0
+            border-radius 6px
+            cursor pointer
+            outline none

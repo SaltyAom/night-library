@@ -10,11 +10,6 @@ use crate::database::get_connection_pool;
 use crate::graphql::{Metadata, Schema};
 use crate::users::jwt::decode;
 
-#[get("/")]
-pub async fn index() -> String {
-    "Hello World".to_owned()
-}
-
 #[get("/graphiql")]
 pub async fn graphiql() -> HttpResponse {
     HttpResponse::Ok()
@@ -51,4 +46,66 @@ pub async fn graphql(
     Ok(HttpResponse::Ok()
         .content_type("application/json")
         .body(result))
+}
+
+#[get("/")]
+pub async fn client_landing() -> HttpResponse {
+    HttpResponse::Ok()
+        .content_type("text/html")
+        .body(
+            include_str!("../../static/index.html").to_owned()
+        )
+}
+
+#[get("/me")]
+pub async fn client_me() -> HttpResponse {
+    HttpResponse::Ok()
+        .content_type("text/html")
+        .body(
+            include_str!("../../static/me/index.html").to_owned()
+        )
+}
+
+#[get("/my-book")]
+pub async fn client_my_book() -> HttpResponse {
+    HttpResponse::Ok()
+        .content_type("text/html")
+        .body(
+            include_str!("../../static/my-book/index.html").to_owned()
+        )
+}
+
+#[get("/signin")]
+pub async fn client_signin() -> HttpResponse {
+    HttpResponse::Ok()
+        .content_type("text/html")
+        .body(
+            include_str!("../../static/signin/index.html").to_owned()
+        )
+}
+
+#[get("/signup")]
+pub async fn client_signup() -> HttpResponse {
+    HttpResponse::Ok()
+        .content_type("text/html")
+        .body(
+            include_str!("../../static/signup/index.html").to_owned()
+        )
+}
+
+pub async fn client_404() -> HttpResponse {
+    HttpResponse::Ok()
+        .content_type("text/html")
+        .body(
+            include_str!("../../static/404/index.html").to_owned()
+        )
+}
+
+pub fn client(config: &mut web::ServiceConfig) {
+    config
+        .service(client_landing)
+        .service(client_me)
+        .service(client_my_book)
+        .service(client_signin)
+        .service(client_signup);
 }

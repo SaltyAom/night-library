@@ -1,0 +1,81 @@
+#login
+    display flex
+    flex-direction column
+    justify-content center
+    align-items flex-start
+    width 100%
+    max-width 320px
+    height calc(100vh - 74px)
+    margin auto
+    padding-bottom 74px
+
+    & > .title
+        margin 0 0 24px 0
+        font-size 28px
+        font-weight 500
+        color var(--title)
+        padding-left 16px
+
+    & > .label
+        font-size 14px
+        font-weight 300
+        color var(--content)
+        margin 12px 0 0 0
+        padding-left 16px
+
+    & > .input
+        appearance none
+        -webkit-appearance none
+        display block
+        width 100%
+        padding 12px 16px
+        font-size 21px
+        font-weight 400
+        color var(--title)
+        background-color var(--fade)
+        border 0
+        border-radius 6px
+        margin 4px 0 12px 0
+        outline none
+
+        &::placeholder
+            color var(--content)
+            font-weight 300
+            opacity .75
+
+    & > .warning
+        color var(--danger)
+        font-size 16px
+        font-weight 500
+        margin 8px 0
+
+    & > .action
+        display flex
+        flex-direction row
+        width 100%
+        margin 16px 0 0 0
+
+        & > .login
+            appearance none
+            -webkit-appearance none
+            display block
+            width 100%
+            font-size 18px
+            font-weight 500
+            color var(--text-on-link)
+            margin 0
+            padding 12px
+            border 0
+            border-radius 6px
+            background-color var(--link)
+            cursor pointer
+
+        & > .link
+            display block
+            width 100%
+            font-size 18px
+            color var(--link)
+            text-align center
+            text-decoration none
+            margin 0
+            padding 12px                

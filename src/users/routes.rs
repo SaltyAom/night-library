@@ -4,6 +4,7 @@ use actix_web::{get, post, web, Error, HttpResponse};
 use diesel::prelude::*;
 use diesel::r2d2::{self, ConnectionManager};
 
+use crate::graphql::ResultQuery;
 use crate::users::hash::hash;
 use crate::users::jwt::{decode, encode};
 use crate::users::model::{User, UserForm};
@@ -18,7 +19,11 @@ pub async fn login(
     identity: Identity,
 ) -> Result<HttpResponse, Error> {
     if identity.identity().is_some() {
-        return Ok(HttpResponse::BadRequest().body("Already logged in".to_owned()));
+        return Ok(HttpResponse::BadRequest().json(ResultQuery {
+            success: false,
+            info: "Already signin in".to_owned(),
+            data: "".to_owned(),
+        }));
     }
 
     let connection = connection_pool.get().expect("Connection Pool");
@@ -42,9 +47,17 @@ pub async fn login(
 
         identity.remember(auth_token.unwrap());
 
-        Ok(HttpResponse::Ok().body(format!("Logged in as {}", user.username.to_owned())))
+        Ok(HttpResponse::Ok().json(ResultQuery {
+            success: true,
+            info: format!("Logged in as {}", user.username),
+            data: "".to_owned(),
+        }))
     } else {
-        Ok(HttpResponse::Unauthorized().body("Username or password is incorrect".to_owned()))
+        Ok(HttpResponse::Ok().json(ResultQuery {
+            success: false,
+            info: format!("Username or Password is incorrect"),
+            data: "".to_owned(),
+        }))
     }
 }
 
@@ -91,7 +104,7 @@ pub async fn refresh(user: Identity) -> HttpResponse {
         if token.exp < get_expire_time() {
             user.remember(encode(&token.name).unwrap());
 
-            HttpResponse::Ok().body("Refreshed".to_owned())
+            HttpResponse::Ok().body(token.name.to_owned())
         } else {
             user.forget();
 

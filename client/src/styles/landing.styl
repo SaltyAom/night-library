@@ -1,0 +1,48 @@
+#book-list
+    width 100%
+    max-width 720px
+    margin 0 auto
+
+    & > .header
+        font-size 18px
+        color var(--content)
+        font-weight 300
+        margin 28px 0 8px 0
+
+    &.-error
+        display flex
+        flex-direction column
+        justify-content center
+        align-items center
+        height calc(100vh - 74px)
+        padding-bottom 74px
+
+        & > .title
+            font-size 32px
+            font-weight 400
+            color var(--title)
+            margin 0
+
+        & > .detail
+            font-size 18px
+            font-weight 300
+            color var(--content)
+            margin 24px 0
+
+        & > .action
+            appearance none
+            -webkit-appearance none
+            display block
+            font-size 18px
+            font-weight 500
+            color var(--text-on-link)
+            text-decoration none
+            margin 20px 0 0 0
+            padding 12px 80px
+            background-color var(--link)
+            border 0
+            border-radius 8px
+            cursor pointer
+
+            &.-compact
+                padding 12px 60px

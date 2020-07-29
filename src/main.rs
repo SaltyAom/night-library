@@ -6,8 +6,13 @@ use std::env;
 use std::sync::Arc;
 use dotenv::dotenv;
 
-use actix_web::{ HttpServer, App };
+use actix_web::{ HttpServer, App, web };
 use actix_identity::{ IdentityService, CookieIdentityPolicy };
+use actix_files as fs;
+
+// ? Use in dev environment
+// use actix_web::http;
+// use actix_cors::Cors;
 
 use crate::database::get_connection_pool;
 use crate::graphql::create_schema;
@@ -30,6 +35,17 @@ async fn main() -> io::Result<()> {
 
     HttpServer::new(move || {
         App::new()
+            // ? Use in dev environment
+            // .wrap(
+            //     Cors::new()
+            //         .allowed_origin("http://localhost:8080")
+            //         .allowed_methods(vec!["GET", "POST"])
+            //         .allowed_headers(vec![http::header::AUTHORIZATION, http::header::ACCEPT])
+            //         .allowed_header(http::header::CONTENT_TYPE)
+            //         .supports_credentials()
+            //         .max_age(86400)
+            //         .finish()
+            // )
             .wrap(
                 IdentityService::new(
                     CookieIdentityPolicy::new(
@@ -41,10 +57,12 @@ async fn main() -> io::Result<()> {
             )
             .data(pool.clone())
             .data(schema.clone())
-            .service(routes::common::index)
             .service(routes::common::graphql)
             .service(routes::common::graphiql)
             .configure(users::routes::user)
+            .configure(routes::common::client)
+            .service(fs::Files::new("/", "./static"))
+            .default_service(web::route().to(routes::common::client_404))
     })
     .bind("0.0.0.0:80")?
     .run()
