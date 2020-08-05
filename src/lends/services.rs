@@ -3,8 +3,8 @@ use crate::lends::model::{Lend, LendDetailResultQuery, LendForm, LendResultQuery
 use crate::database::ConnectionPool;
 
 pub fn borrow_books_service(
-    username: Option<String>,
-    lend_form: LendForm,
+    username: &Option<String>,
+    lend_form: &LendForm,
     connection_pool: ConnectionPool,
 ) -> LendResultQuery {
     if username.is_none() {
@@ -18,7 +18,7 @@ pub fn borrow_books_service(
     let connection = connection_pool.get().expect("Connection Pool");
 
     let to_be_lend = Lend {
-        username: username.unwrap(),
+        username: username.as_ref().unwrap().to_owned(),
         books: lend_form.books.to_owned(),
     };
 
@@ -49,7 +49,7 @@ pub fn borrow_books_service(
 }
 
 pub fn list_borrowed_service(
-    username: Option<String>,
+    username: &Option<String>,
     connection_pool: ConnectionPool,
 ) -> LendDetailResultQuery {
     if username.is_none() {
@@ -63,7 +63,7 @@ pub fn list_borrowed_service(
     let connection = connection_pool.get().expect("Connection Pool");
 
     let books = Lend {
-        username: username.unwrap(),
+        username: username.as_ref().unwrap().to_owned(),
         books: vec![],
     };
 
@@ -94,8 +94,8 @@ pub fn list_borrowed_service(
 }
 
 pub fn return_books_service(
-    username: Option<String>,
-    lend_form: LendForm,
+    username: &Option<String>,
+    lend_form: &LendForm,
     connection_pool: ConnectionPool,
 ) -> LendResultQuery {
     if username.is_none() {
@@ -109,7 +109,7 @@ pub fn return_books_service(
     let connection = connection_pool.get().expect("Connection Pool");
 
     let to_be_lend = Lend {
-        username: username.unwrap(),
+        username: username.as_ref().unwrap().to_owned(),
         books: lend_form.books.to_owned(),
     };
 

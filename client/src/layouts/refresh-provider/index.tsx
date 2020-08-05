@@ -6,23 +6,20 @@ import { UserStore, UserEvent } from '../../stores/types'
 import RefreshProviderComponent from './types'
 
 const RefreshProvider: RefreshProviderComponent = ({ children }) => {
-    let { dispatch, username } = useStoreon<UserStore, UserEvent>('username')
+    let { dispatch } = useStoreon<UserStore, UserEvent>()
 
     useEffect(() => {
-        if(username)
-            fetch(`http://localhost/api/refresh`, {
-                method: 'POST',
-                credentials: 'include'
-            })
-            .then(res => res.text())
-            .then(res => {
-                if(res)
-                    dispatch("UPDATE_USERNAME", res)
-                else
-                    dispatch("LOGOUT", '')
-            })
-        else
-            dispatch("LOGOUT", '')
+        fetch(`http://localhost/api/refresh`, {
+            method: 'POST',
+            credentials: 'include'
+        })
+        .then(res => res.text())
+        .then(username => {
+            if(username)
+                dispatch("UPDATE_USERNAME", username)
+            else
+                dispatch("LOGOUT", '')
+        })
     }, [])    
     
     return children

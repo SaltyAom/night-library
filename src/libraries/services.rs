@@ -3,15 +3,8 @@ use crate::libraries::model::{Librarie, ListBookResultQuery};
 
 use crate::database::ConnectionPool;
 
-pub fn add_book_service(book: Librarie, connection_pool: ConnectionPool) -> ResultQuery {
+pub fn add_book_service(library: &Librarie, connection_pool: ConnectionPool) -> ResultQuery {
     let connection = connection_pool.get().expect("Connection Pool");
-
-    let library = Librarie {
-        title: book.title.to_owned(),
-        author: book.author.to_owned(),
-        price: book.price.to_owned(),
-        ..Default::default()
-    };
 
     let response = library.add(&connection);
 
@@ -19,7 +12,7 @@ pub fn add_book_service(book: Librarie, connection_pool: ConnectionPool) -> Resu
         Ok(book) => ResultQuery {
             success: true,
             info: "".to_owned(),
-            data: format!("{} rented", book.title),
+            data: format!("Add {}", book.title),
         },
         Err(error) => {
             eprintln!("{}", error);
@@ -57,5 +50,29 @@ pub fn list_book_service(connection_pool: ConnectionPool) -> ListBookResultQuery
                 data: vec![],
             }
         }
+    }
+}
+
+pub fn remove_book_service(id: &str, connection_pool: ConnectionPool) -> ResultQuery {
+    let connection = connection_pool.get().expect("Connection Pool");
+
+    let library = Librarie {
+        id: id.to_owned(),
+        ..Default::default()
+    };
+
+    let response = library.remove(&connection);
+
+    match response {
+        Ok(_) => ResultQuery {
+            success: true,
+            info: "".to_owned(),
+            data: format!("Remove {}", id),
+        },
+        Err(_) => ResultQuery {
+            success: false,
+            info: "Unable to connect to database".to_owned(),
+            data: "".to_owned(),
+        },
     }
 }

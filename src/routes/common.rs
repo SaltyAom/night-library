@@ -14,7 +14,7 @@ use crate::users::jwt::decode;
 pub async fn graphiql() -> HttpResponse {
     HttpResponse::Ok()
         .content_type("text/html; charset=utf-8")
-        .body(graphiql_source("http://127.0.0.1:80/graphql"))
+        .body(graphiql_source("http://localhost/graphql"))
 }
 
 #[post("/graphql")]

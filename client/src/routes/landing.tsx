@@ -1,6 +1,8 @@
 import { h } from 'preact'
 import { useState } from 'preact/hooks'
 
+import { Link } from 'wouter/preact'
+
 import { useStoreon } from 'storeon/preact'
 import { UserStore, UserEvent } from '../stores/types'
 
@@ -11,7 +13,6 @@ import BookDisplay from '../component/book'
 import { Book } from '../component/book/types'
 
 import '../styles/landing.styl'
-import { Link } from 'wouter/preact'
 
 const Landing = () => {
     let { username } = useStoreon<UserStore, UserEvent>('username')

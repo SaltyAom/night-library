@@ -44,24 +44,21 @@ impl Default for Librarie {
 
 impl Librarie {
     pub fn add(&self, connection: &PgConnection) -> Result<Librarie, diesel::result::Error> {
-        let new_book = Librarie {
-            id: Uuid::new_v4().to_string(),
-            title: self.title.to_owned(),
-            author: self.title.to_owned(),
-            price: self.price.to_owned(),
-        };
-
         diesel::insert_into(libraries)
-            .values(&new_book)
+            .values(self)
             .execute(connection)?;
 
-        Ok(new_book)
+        Ok(self.to_owned())
     }
 
     pub fn list(&self, connection: &PgConnection) -> Result<Vec<Librarie>, diesel::result::Error> {
-        let books = libraries.load(connection);
+        libraries.load(connection)
+    }
 
-        books
+    pub fn remove(&self, connection: &PgConnection) -> Result<Librarie, diesel::result::Error> {
+        diesel::delete(libraries.filter(id.eq(self.id.to_owned()))).execute(connection)?;
+
+        Ok(self.to_owned())
     }
 }
 
